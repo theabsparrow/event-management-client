@@ -1,11 +1,11 @@
 "use client";
 
 import { TEventInfos } from "@/types/event.type";
-import EventCard from "../eventCard/EventCard";
 import { TMetaDataProps } from "@/types/metaType";
 import Pagination from "../pagination/Pagination";
+import MyEventCard from "../myEventCard/MyEventCard";
 
-const AllEvents = ({
+const MyEventsInfo = ({
   events,
   meta,
 }: {
@@ -21,7 +21,7 @@ const AllEvents = ({
       ) : (
         <div className="grid grid-cols-1 md:grid-cols-3 gap-10 mt-10">
           {events.map((event) => (
-            <EventCard key={event?._id} event={event} />
+            <MyEventCard key={event?._id} event={event} />
           ))}
         </div>
       )}
@@ -31,4 +31,4 @@ const AllEvents = ({
   );
 };
 
-export default AllEvents;
+export default MyEventsInfo;

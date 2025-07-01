@@ -6,7 +6,7 @@ import Link from "next/link";
 import { useState } from "react";
 import logo from "../../app/assets/logo.png";
 import { TUserInfo } from "@/types/userTypes";
-import { useRouter } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { logout } from "@/services/authService";
 import { useUser } from "@/context/UserContext";
 
@@ -15,13 +15,20 @@ const Navbar = ({ userInfo }: { userInfo: TUserInfo }) => {
   const [menuOpen, setMenuOpen] = useState(false);
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const router = useRouter();
-
+  const pathname = usePathname();
   const handleLogout = async () => {
     await logout();
     setUser(null);
     setIsLoading(true);
     router.push("/login");
   };
+  const isActive = (path: string) => pathname === path;
+  const linkClasses = (path: string) =>
+    `hover:text-purple-600 ${
+      pathname === path
+        ? "text-purple-700 font-semibold"
+        : "text-gray-700 dark:text-gray-300"
+    }`;
 
   return (
     <nav className="bg-gray-200 dark:bg-gray-900 shadow-xl sticky top-0 w-full z-50 transition duration-300 md:px-16 px-5 flex items-center justify-between py-4 ">
@@ -31,24 +38,24 @@ const Navbar = ({ userInfo }: { userInfo: TUserInfo }) => {
         </Link>
       </div>
       <div className="space-x-6 hidden md:flex">
-        <Link href="/" className="hover:text-purple-600">
+        <Link href="/" className={linkClasses("/")}>
           Home
         </Link>
-        <Link href="/events" className="hover:text-purple-600">
+        <Link href="/events" className={linkClasses("/events")}>
           Events
         </Link>
-        <Link href="/addEvent" className="hover:text-purple-600">
+        <Link href="/addEvent" className={linkClasses("/addEvent")}>
           Add Event
         </Link>
-        <Link href="/myEvents" className="hover:text-purple-600">
+        <Link href="/myEvents" className={linkClasses("/myEvents")}>
           My Event
         </Link>
         {userInfo && (
           <div className="space-x-6">
-            <Link href="/myAttendence" className="hover:text-purple-600">
+            <Link href="/myAttendence" className={linkClasses("/myAttendence")}>
               My Attendence
             </Link>
-            <Link href="/profile" className="hover:text-purple-600">
+            <Link href="/profile" className={linkClasses("/profile")}>
               Profile
             </Link>
           </div>
@@ -57,16 +64,24 @@ const Navbar = ({ userInfo }: { userInfo: TUserInfo }) => {
 
       <div className="hidden md:flex">
         {!userInfo ? (
-          <div className="space-x-6 ">
+          <div className="space-x-6">
             <Link
               href="/login"
-              className="bg-purple-600 text-white px-4 py-2 rounded hover:bg-purple-700 transition"
+              className={`px-4 py-2 rounded transition ${
+                isActive("/login")
+                  ? "bg-purple-700 text-white"
+                  : "bg-purple-600 text-white hover:bg-purple-700"
+              }`}
             >
               Sign In
             </Link>
             <Link
               href="/signUp"
-              className="bg-purple-600 text-white px-4 py-2 rounded hover:bg-purple-700 transition"
+              className={`px-4 py-2 rounded transition ${
+                isActive("/signUp")
+                  ? "bg-purple-700 text-white"
+                  : "bg-purple-600 text-white hover:bg-purple-700"
+              }`}
             >
               Sign Up
             </Link>
@@ -86,12 +101,12 @@ const Navbar = ({ userInfo }: { userInfo: TUserInfo }) => {
               />
             </div>
             {dropdownOpen && (
-              <div className="absolute right-0 mt-2 bg-white border rounded shadow-md w-40 z-50">
-                <div className="px-4 py-2 text-sm text-gray-700 border-b">
+              <div className="absolute right-0 mt-2 bg-white dark:bg-gray-800 border dark:border-gray-600 rounded shadow-md w-40 z-50">
+                <div className="px-4 py-2 text-sm text-gray-700 dark:text-gray-200 border-b dark:border-gray-600">
                   Abul Bashar
                 </div>
                 <button
-                  className="w-full text-left px-4 py-2 text-sm hover:bg-gray-100 cursor-pointer"
+                  className="w-full text-left px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700"
                   onClick={handleLogout}
                 >
                   Logout

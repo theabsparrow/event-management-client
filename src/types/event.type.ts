@@ -11,6 +11,7 @@ export type TEvent = {
 };
 
 export type TEventInfos = {
+  _id: string;
   userId: string;
   title: string;
   name: string;
