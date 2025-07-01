@@ -3,6 +3,9 @@
 
 import { config } from "@/config";
 import { cookies } from "next/headers";
+import { getValidToken } from "../authService/getValidToken";
+import { TUserInfo } from "@/types/userTypes";
+import { revalidateTag } from "next/cache";
 
 export const getMyProfle = async () => {
   try {
@@ -21,6 +24,26 @@ export const getMyProfle = async () => {
       },
     });
     const result = await res.json();
+    return result;
+  } catch (error: any) {
+    return Error(error);
+  }
+};
+
+export const updateMyProfile = async (profileInfo: Partial<TUserInfo>) => {
+  console.log(profileInfo);
+  const token = await getValidToken();
+  try {
+    const res = await fetch(`${config.next_public_base_api}/user/update-data`, {
+      method: "PATCH",
+      headers: {
+        Authorization: token,
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(profileInfo),
+    });
+    const result = await res.json();
+    revalidateTag("Profile");
     return result;
   } catch (error: any) {
     return Error(error);

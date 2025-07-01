@@ -9,6 +9,7 @@ import { TUserInfo } from "@/types/userTypes";
 import { usePathname, useRouter } from "next/navigation";
 import { logout } from "@/services/authService";
 import { useUser } from "@/context/UserContext";
+import DarkModeToggle from "./DarkmodeToggle";
 
 const Navbar = ({ userInfo }: { userInfo: TUserInfo }) => {
   const { setIsLoading, setUser } = useUser();
@@ -62,7 +63,7 @@ const Navbar = ({ userInfo }: { userInfo: TUserInfo }) => {
         )}
       </div>
 
-      <div className="hidden md:flex">
+      <div className="hidden md:flex space-x-3">
         {!userInfo ? (
           <div className="space-x-6">
             <Link
@@ -102,8 +103,8 @@ const Navbar = ({ userInfo }: { userInfo: TUserInfo }) => {
             </div>
             {dropdownOpen && (
               <div className="absolute right-0 mt-2 bg-white dark:bg-gray-800 border dark:border-gray-600 rounded shadow-md w-40 z-50">
-                <div className="px-4 py-2 text-sm text-gray-700 dark:text-gray-200 border-b dark:border-gray-600">
-                  Abul Bashar
+                <div className="px-4 py-2 text-sm text-purple-700 dark:text-gray-200 border-b dark:border-gray-600">
+                  {userInfo?.name}
                 </div>
                 <button
                   className="w-full text-left px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700"
@@ -115,6 +116,7 @@ const Navbar = ({ userInfo }: { userInfo: TUserInfo }) => {
             )}
           </div>
         )}
+        <DarkModeToggle />
       </div>
 
       <button className="md:hidden" onClick={() => setMenuOpen(!menuOpen)}>
@@ -194,7 +196,7 @@ const Navbar = ({ userInfo }: { userInfo: TUserInfo }) => {
               </div>
               <div className="flex flex-col space-y-2">
                 <span className="text-sm font-medium text-gray-900 dark:text-gray-200">
-                  Abul Bashar
+                  {userInfo?.name}
                 </span>
                 <button
                   onClick={handleLogout}
@@ -205,6 +207,7 @@ const Navbar = ({ userInfo }: { userInfo: TUserInfo }) => {
               </div>
             </div>
           )}
+          <DarkModeToggle />
         </div>
       )}
     </nav>

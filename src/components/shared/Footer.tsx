@@ -1,4 +1,5 @@
 "use client";
+import Link from "next/link";
 import { FaFacebook, FaTwitter, FaInstagram, FaLinkedin } from "react-icons/fa";
 
 const Footer = () => {
@@ -20,24 +21,24 @@ const Footer = () => {
             <h3 className="text-lg font-semibold text-white mb-4">Explore</h3>
             <ul className="space-y-2 text-sm">
               <li>
-                <a href="/events" className="hover:text-purple-500">
+                <Link href="/events" className="hover:text-purple-500">
                   Upcoming Events
-                </a>
+                </Link>
               </li>
               <li>
-                <a href="/services" className="hover:text-purple-500">
+                <Link href="/services" className="hover:text-purple-500">
                   Our Services
-                </a>
+                </Link>
               </li>
               <li>
-                <a href="/pricing" className="hover:text-purple-500">
+                <Link href="/pricing" className="hover:text-purple-500">
                   Pricing
-                </a>
+                </Link>
               </li>
               <li>
-                <a href="/contact" className="hover:text-purple-500">
+                <Link href="/contact" className="hover:text-purple-500">
                   Contact Us
-                </a>
+                </Link>
               </li>
             </ul>
           </div>
@@ -47,24 +48,24 @@ const Footer = () => {
             <h3 className="text-lg font-semibold text-white mb-4">Support</h3>
             <ul className="space-y-2 text-sm">
               <li>
-                <a href="/faq" className="hover:text-purple-500">
+                <Link href="/faq" className="hover:text-purple-500">
                   FAQ
-                </a>
+                </Link>
               </li>
               <li>
-                <a href="/help" className="hover:text-purple-500">
+                <Link href="/help" className="hover:text-purple-500">
                   Help Center
-                </a>
+                </Link>
               </li>
               <li>
-                <a href="/terms" className="hover:text-purple-500">
+                <Link href="/terms" className="hover:text-purple-500">
                   Terms & Conditions
-                </a>
+                </Link>
               </li>
               <li>
-                <a href="/privacy" className="hover:text-purple-500">
+                <Link href="/privacy" className="hover:text-purple-500">
                   Privacy Policy
-                </a>
+                </Link>
               </li>
             </ul>
           </div>
@@ -78,18 +79,30 @@ const Footer = () => {
               +880-1234-567890
             </p>
             <div className="flex space-x-4 text-xl text-gray-400">
-              <a href="https://facebook.com" className="hover:text-purple-500">
+              <Link
+                href="https://facebook.com"
+                className="hover:text-purple-500"
+              >
                 <FaFacebook />
-              </a>
-              <a href="https://twitter.com" className="hover:text-purple-500">
+              </Link>
+              <Link
+                href="https://twitter.com"
+                className="hover:text-purple-500"
+              >
                 <FaTwitter />
-              </a>
-              <a href="https://instagram.com" className="hover:text-purple-500">
+              </Link>
+              <Link
+                href="https://instagram.com"
+                className="hover:text-purple-500"
+              >
                 <FaInstagram />
-              </a>
-              <a href="https://linkedin.com" className="hover:text-purple-500">
+              </Link>
+              <Link
+                href="https://linkedin.com"
+                className="hover:text-purple-500"
+              >
                 <FaLinkedin />
-              </a>
+              </Link>
             </div>
           </div>
         </div>

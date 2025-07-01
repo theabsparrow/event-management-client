@@ -33,6 +33,23 @@ export const getAllEvents = async (query?: {
     return Error(error);
   }
 };
+export const getTwoEvents = async () => {
+  try {
+    const res = await fetch(
+      `${config.next_public_base_api}/event/all-events?limit=2`,
+      {
+        method: "GET",
+        next: {
+          tags: ["Events"],
+        },
+      }
+    );
+    const result = await res.json();
+    return result;
+  } catch (error: any) {
+    return Error(error);
+  }
+};
 
 export const getASingleEvent = async (id: string) => {
   try {
