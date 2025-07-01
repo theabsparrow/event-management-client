@@ -25,10 +25,10 @@ const Navbar = () => {
         <Link href="/events" className="hover:text-purple-600">
           Events
         </Link>
-        <Link href="/add-event" className="hover:text-purple-600">
+        <Link href="/addEvent" className="hover:text-purple-600">
           Add Event
         </Link>
-        <Link href="/my-event" className="hover:text-purple-600">
+        <Link href="/myEvents" className="hover:text-purple-600">
           My Event
         </Link>
       </div>
@@ -43,7 +43,7 @@ const Navbar = () => {
               Sign In
             </Link>
             <Link
-              href="/login"
+              href="/signUp"
               className="bg-purple-600 text-white px-4 py-2 rounded hover:bg-purple-700 transition"
             >
               Sign Up
@@ -87,17 +87,29 @@ const Navbar = () => {
       </button>
 
       {menuOpen && (
-        <div className="absolute top-full right-0 bg-white shadow-md flex flex-col gap-4 px-6 py-4 md:hidden">
-          <Link href="/" className="hover:text-purple-600">
+        <div className="absolute top-full right-0 bg-white dark:bg-gray-900 shadow-md dark:shadow-lg flex flex-col gap-4 px-6 py-4 md:hidden">
+          <Link
+            href="/"
+            className="hover:text-purple-600 dark:hover:text-purple-400 text-gray-800 dark:text-gray-200"
+          >
             Home
           </Link>
-          <Link href="/events" className="hover:text-purple-600">
+          <Link
+            href="/events"
+            className="hover:text-purple-600 dark:hover:text-purple-400 text-gray-800 dark:text-gray-200"
+          >
             Events
           </Link>
-          <Link href="/add-event" className="hover:text-purple-600">
+          <Link
+            href="/addEvent"
+            className="hover:text-purple-600 dark:hover:text-purple-400 text-gray-800 dark:text-gray-200"
+          >
             Add Event
           </Link>
-          <Link href="/my-event" className="hover:text-purple-600">
+          <Link
+            href="/myEvents"
+            className="hover:text-purple-600 dark:hover:text-purple-400 text-gray-800 dark:text-gray-200"
+          >
             My Event
           </Link>
 
@@ -110,7 +122,7 @@ const Navbar = () => {
                 Sign In
               </Link>
               <Link
-                href="/login"
+                href="/signUp"
                 className="bg-purple-600 text-white px-4 py-2 rounded hover:bg-purple-700 transition"
               >
                 Sign In
@@ -128,12 +140,14 @@ const Navbar = () => {
                 />
               </div>
               <div className="flex flex-col">
-                <span className="text-sm font-medium">Abul Bashar</span>
+                <span className="text-sm font-medium text-gray-900 dark:text-gray-200">
+                  Abul Bashar
+                </span>
                 <button
                   onClick={() => {
                     console.log("Logout");
                   }}
-                  className="text-left text-sm text-red-600 hover:underline"
+                  className="text-left text-sm text-red-600 dark:text-red-400 hover:underline"
                 >
                   Logout
                 </button>
