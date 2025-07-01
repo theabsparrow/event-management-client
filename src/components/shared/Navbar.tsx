@@ -5,15 +5,27 @@ import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";
 import logo from "../../app/assets/logo.png";
+import { TUserInfo } from "@/types/userTypes";
+import { useRouter } from "next/navigation";
+import { logout } from "@/services/authService";
+import { useUser } from "@/context/UserContext";
 
-const Navbar = () => {
+const Navbar = ({ userInfo }: { userInfo: TUserInfo }) => {
+  const { setIsLoading, setUser } = useUser();
   const [menuOpen, setMenuOpen] = useState(false);
   const [dropdownOpen, setDropdownOpen] = useState(false);
-  const isLoggedIn = false;
-  const profilepic = "https://ibb.co/2Y8xQ40Z";
+  const router = useRouter();
+
+  const handleLogout = async () => {
+    await logout();
+    setUser(null);
+    setIsLoading(true);
+    router.push("/login");
+  };
+
   return (
     <nav className="bg-gray-200 dark:bg-gray-900 shadow-xl sticky top-0 w-full z-50 transition duration-300 md:px-16 px-5 flex items-center justify-between py-4 ">
-      <div>
+      <div className=" bg-purple-300">
         <Link href="/">
           <Image src={logo} alt="logo" width={200} height={70} />
         </Link>
@@ -31,10 +43,20 @@ const Navbar = () => {
         <Link href="/myEvents" className="hover:text-purple-600">
           My Event
         </Link>
+        {userInfo && (
+          <div className="space-x-6">
+            <Link href="/myAttendence" className="hover:text-purple-600">
+              My Attendence
+            </Link>
+            <Link href="/profile" className="hover:text-purple-600">
+              Profile
+            </Link>
+          </div>
+        )}
       </div>
 
       <div className="hidden md:flex">
-        {!isLoggedIn ? (
+        {!userInfo ? (
           <div className="space-x-6 ">
             <Link
               href="/login"
@@ -56,7 +78,7 @@ const Navbar = () => {
               onClick={() => setDropdownOpen(!dropdownOpen)}
             >
               <Image
-                src={profilepic}
+                src={userInfo?.photoURL}
                 alt="Profile"
                 width={36}
                 height={36}
@@ -70,9 +92,7 @@ const Navbar = () => {
                 </div>
                 <button
                   className="w-full text-left px-4 py-2 text-sm hover:bg-gray-100"
-                  onClick={() => {
-                    console.log("Logout");
-                  }}
+                  onClick={handleLogout}
                 >
                   Logout
                 </button>
@@ -113,7 +133,7 @@ const Navbar = () => {
             My Event
           </Link>
 
-          {!isLoggedIn ? (
+          {!userInfo ? (
             <div className="flex flex-col space-y-3">
               <Link
                 href="/login"
@@ -132,7 +152,7 @@ const Navbar = () => {
             <div className="flex items-center gap-3">
               <div className="w-9 h-9 rounded-full overflow-hidden">
                 <Image
-                  src={profilepic}
+                  src={userInfo?.photoURL}
                   alt="Profile"
                   width={36}
                   height={36}
@@ -144,9 +164,7 @@ const Navbar = () => {
                   Abul Bashar
                 </span>
                 <button
-                  onClick={() => {
-                    console.log("Logout");
-                  }}
+                  onClick={handleLogout}
                   className="text-left text-sm text-red-600 dark:text-red-400 hover:underline"
                 >
                   Logout

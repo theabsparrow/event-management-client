@@ -47,6 +47,11 @@ export const loginUser = async (loginData: loginFormValues) => {
   }
 };
 
+export const logout = async () => {
+  (await cookies()).delete("refreshToken");
+  (await cookies()).delete("accessToken");
+};
+
 export const getCurrentUser = async () => {
   const refreshToken = (await cookies()).get("refreshToken")?.value;
   let decodedData = null;
@@ -55,5 +60,20 @@ export const getCurrentUser = async () => {
     return decodedData;
   } else {
     return null;
+  }
+};
+
+export const getNewToken = async () => {
+  try {
+    const res = await fetch(`${config.next_public_base_api}/auth/get-token`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: (await cookies()).get("refreshToken")!.value,
+      },
+    });
+    return res.json();
+  } catch (error: any) {
+    return Error(error);
   }
 };

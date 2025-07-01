@@ -6,3 +6,13 @@ export type TUSer = {
   userId: string;
   userRole: TUSerRole;
 };
+
+export type TUserInfo = {
+  name: string;
+  email: string;
+  password: string;
+  photoURL: string;
+  role: TUSerRole;
+  isDeleted: boolean;
+  passwordChangedAt?: Date;
+};
