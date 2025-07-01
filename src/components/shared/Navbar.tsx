@@ -108,30 +108,48 @@ const Navbar = ({ userInfo }: { userInfo: TUserInfo }) => {
 
       {menuOpen && (
         <div className="absolute top-full right-0 bg-white dark:bg-gray-900 shadow-md dark:shadow-lg flex flex-col gap-4 px-6 py-4 md:hidden">
-          <Link
-            href="/"
-            className="hover:text-purple-600 dark:hover:text-purple-400 text-gray-800 dark:text-gray-200"
-          >
-            Home
-          </Link>
-          <Link
-            href="/events"
-            className="hover:text-purple-600 dark:hover:text-purple-400 text-gray-800 dark:text-gray-200"
-          >
-            Events
-          </Link>
-          <Link
-            href="/addEvent"
-            className="hover:text-purple-600 dark:hover:text-purple-400 text-gray-800 dark:text-gray-200"
-          >
-            Add Event
-          </Link>
-          <Link
-            href="/myEvents"
-            className="hover:text-purple-600 dark:hover:text-purple-400 text-gray-800 dark:text-gray-200"
-          >
-            My Event
-          </Link>
+          <div className="flex flex-col space-y-2">
+            <Link
+              href="/"
+              className="hover:text-purple-600 dark:hover:text-purple-400 text-gray-800 dark:text-gray-200"
+            >
+              Home
+            </Link>
+            <Link
+              href="/events"
+              className="hover:text-purple-600 dark:hover:text-purple-400 text-gray-800 dark:text-gray-200"
+            >
+              Events
+            </Link>
+            <Link
+              href="/addEvent"
+              className="hover:text-purple-600 dark:hover:text-purple-400 text-gray-800 dark:text-gray-200"
+            >
+              Add Event
+            </Link>
+            <Link
+              href="/myEvents"
+              className="hover:text-purple-600 dark:hover:text-purple-400 text-gray-800 dark:text-gray-200"
+            >
+              My Event
+            </Link>
+            {userInfo && (
+              <div className="flex flex-col space-y-2">
+                <Link
+                  href="/myAttendence"
+                  className="hover:text-purple-600 dark:hover:text-purple-400 text-gray-800 dark:text-gray-200"
+                >
+                  My Attendence
+                </Link>
+                <Link
+                  href="/profile"
+                  className="hover:text-purple-600 dark:hover:text-purple-400 text-gray-800 dark:text-gray-200"
+                >
+                  Profile
+                </Link>
+              </div>
+            )}
+          </div>
 
           {!userInfo ? (
             <div className="flex flex-col space-y-3">
@@ -149,7 +167,7 @@ const Navbar = ({ userInfo }: { userInfo: TUserInfo }) => {
               </Link>
             </div>
           ) : (
-            <div className="flex items-center gap-3">
+            <div className="space-y-2">
               <div className="w-9 h-9 rounded-full overflow-hidden">
                 <Image
                   src={userInfo?.photoURL}
@@ -159,7 +177,7 @@ const Navbar = ({ userInfo }: { userInfo: TUserInfo }) => {
                   className="object-cover"
                 />
               </div>
-              <div className="flex flex-col">
+              <div className="flex flex-col space-y-2">
                 <span className="text-sm font-medium text-gray-900 dark:text-gray-200">
                   Abul Bashar
                 </span>
