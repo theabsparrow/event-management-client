@@ -2,10 +2,14 @@
 
 import { TEventInfos } from "@/types/event.type";
 import { formatTime12Hour } from "@/utills/formatTime";
+import { Trash2 } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
+import { useState } from "react";
+import DeleteModal from "../deletemodal/DeleteModal";
 
 const MyEventCard = ({ event }: { event: TEventInfos }) => {
+  const [showModal, setShowModal] = useState(false);
   const {
     title,
     name,
@@ -18,9 +22,15 @@ const MyEventCard = ({ event }: { event: TEventInfos }) => {
     attendeeCount,
   } = event;
   const formatedTime = formatTime12Hour(time);
-
   return (
-    <div className="bg-white dark:bg-gray-800 shadow-md rounded-xl overflow-hidden transition hover:shadow-lg p-4">
+    <div className="bg-white dark:bg-gray-800 shadow-md rounded-xl overflow-hidden transition hover:shadow-lg p-6 relative">
+      <button
+        onClick={() => setShowModal(true)}
+        className="  text-gray-700 dark:text-white rounded hover:text-red-700 duration-500 cursor-pointer absolute right-0 top-0"
+      >
+        <Trash2 className="w-5 h-5" />
+      </button>
+      {showModal && <DeleteModal setShowModal={setShowModal} id={event?._id} />}
       {image && (
         <div className="w-full h-52 relative rounded-xl shadow-xl">
           <Image src={image} alt={title} fill className="object-cover " />

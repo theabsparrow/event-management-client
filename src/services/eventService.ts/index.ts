@@ -2,7 +2,7 @@
 "use server";
 
 import { config } from "@/config";
-import { TEvent } from "@/types/event.type";
+import { TEvent, TEventInfos } from "@/types/event.type";
 import { getValidToken } from "../authService/getValidToken";
 import { revalidateTag } from "next/cache";
 import { cookies } from "next/headers";
@@ -169,6 +169,54 @@ export const createEvent = async (eventInfo: TEvent) => {
     );
     const result = await res.json();
     revalidateTag("Events");
+    revalidateTag("myEvent");
+    return result;
+  } catch (error: any) {
+    return Error(error);
+  }
+};
+
+export const updateEventData = async (
+  eventData: Partial<TEventInfos>,
+  id: string
+) => {
+  const token = await getValidToken();
+  try {
+    const res = await fetch(
+      `${config.next_public_base_api}/event/update-event/${id}`,
+      {
+        method: "PATCH",
+        headers: {
+          Authorization: token,
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(eventData),
+      }
+    );
+    const result = await res.json();
+    revalidateTag("Events");
+    revalidateTag("myEvent");
+    return result;
+  } catch (error: any) {
+    return Error(error);
+  }
+};
+
+export const deleteEvent = async (id: string) => {
+  const token = await getValidToken();
+  try {
+    const res = await fetch(
+      `${config.next_public_base_api}/event/delete-event/${id}`,
+      {
+        method: "DELETE",
+        headers: {
+          Authorization: token,
+        },
+      }
+    );
+    const result = await res.json();
+    revalidateTag("Events");
+    revalidateTag("myEvent");
     return result;
   } catch (error: any) {
     return Error(error);
