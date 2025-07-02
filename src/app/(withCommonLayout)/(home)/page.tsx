@@ -5,12 +5,12 @@ import { getMostAttendEvent, getTwoEvents } from "@/services/eventService.ts";
 
 const HomePage = async () => {
   const { data } = await getTwoEvents();
-  const events = data.result;
+  const events = data?.result || [];
   const firstTwoEvents = events.slice(0, 2);
   const firstSixEvents = events.slice(0, 6);
 
   const { data: mostAttendedEvents } = await getMostAttendEvent();
-  const mostAttended = mostAttendedEvents?.result;
+  const mostAttended = mostAttendedEvents?.result || [];
 
   return (
     <div className="md:px-16 px-5">
