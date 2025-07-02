@@ -15,6 +15,15 @@ export const getAllEvents = async (query?: {
     if (query?.searchTerm) {
       params.append("searchTerm", query?.searchTerm.toString());
     }
+    if (query?.startDate) {
+      params.append("startDate", query?.startDate.toString());
+    }
+    if (query?.endDate) {
+      params.append("endDate", query?.endDate.toString());
+    }
+    if (query?.date) {
+      params.append("date", query?.date.toString());
+    }
     if (query?.page) {
       params.append("page", query?.page.toString());
     }
@@ -35,8 +44,22 @@ export const getAllEvents = async (query?: {
 };
 export const getTwoEvents = async () => {
   try {
+    const res = await fetch(`${config.next_public_base_api}/event/all-events`, {
+      method: "GET",
+      next: {
+        tags: ["Events"],
+      },
+    });
+    const result = await res.json();
+    return result;
+  } catch (error: any) {
+    return Error(error);
+  }
+};
+export const getMostAttendEvent = async () => {
+  try {
     const res = await fetch(
-      `${config.next_public_base_api}/event/all-events?limit=2`,
+      `${config.next_public_base_api}/event/all-events?limit=6&sort=attendeeCount`,
       {
         method: "GET",
         next: {

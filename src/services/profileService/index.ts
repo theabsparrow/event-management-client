@@ -10,10 +10,7 @@ import { revalidateTag } from "next/cache";
 export const getMyProfle = async () => {
   try {
     const cookieStore = await cookies();
-    const token = cookieStore.get("refreshToken")?.value;
-    if (!token) {
-      throw new Error("you are not authorized");
-    }
+    const token = cookieStore.get("refreshToken")!.value;
     const res = await fetch(`${config.next_public_base_api}/user/get-me`, {
       method: "GET",
       headers: {
@@ -31,7 +28,6 @@ export const getMyProfle = async () => {
 };
 
 export const updateMyProfile = async (profileInfo: Partial<TUserInfo>) => {
-  console.log(profileInfo);
   const token = await getValidToken();
   try {
     const res = await fetch(`${config.next_public_base_api}/user/update-data`, {

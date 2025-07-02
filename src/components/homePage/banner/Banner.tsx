@@ -1,5 +1,7 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 
+import { joinEvent } from "@/services/attendeeService";
 import { TEventInfos } from "@/types/event.type";
 import { formatTime12Hour } from "@/utills/formatTime";
 import Image from "next/image";
@@ -23,6 +25,16 @@ const Banner = ({ events }: { events: TEventInfos[] }) => {
         toast.error("you can`t join previous event");
         return;
       }
+    }
+    try {
+      const res = await joinEvent(id);
+      if (res?.success) {
+        toast.success(res?.message, { duration: 3000 });
+      } else {
+        toast.error(res?.message, { duration: 3000 });
+      }
+    } catch (error: any) {
+      console.log(error);
     }
   };
   return (

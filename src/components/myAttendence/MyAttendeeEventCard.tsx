@@ -1,14 +1,14 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 
-import { joinEvent } from "@/services/attendeeService";
+import { cancelEvent } from "@/services/attendeeService";
 import { TEventInfos } from "@/types/event.type";
 import { formatTime12Hour } from "@/utills/formatTime";
 import Image from "next/image";
 import Link from "next/link";
 import { toast } from "sonner";
 
-const EventCard = ({ event }: { event: TEventInfos }) => {
+const MyAttendeeEventCard = ({ event }: { event: TEventInfos }) => {
   const {
     title,
     name,
@@ -22,7 +22,11 @@ const EventCard = ({ event }: { event: TEventInfos }) => {
   } = event;
   const formatedTime = formatTime12Hour(time);
 
-  const handleJoin = async () => {
+  const eventDate = new Date(date);
+  const today = new Date();
+  today.setHours(0, 0, 0, 0);
+
+  const handleCancel = async () => {
     const eventDate = new Date(date);
     const today = new Date();
     today.setHours(0, 0, 0, 0);
@@ -41,7 +45,7 @@ const EventCard = ({ event }: { event: TEventInfos }) => {
       }
     }
     try {
-      const res = await joinEvent(_id);
+      const res = await cancelEvent(_id);
       if (res?.success) {
         toast.success(res?.message, { duration: 3000 });
       } else {
@@ -96,16 +100,20 @@ const EventCard = ({ event }: { event: TEventInfos }) => {
         </p>
 
         <div className="pt-3">
-          <button
-            onClick={handleJoin}
-            className="bg-purple-600 text-white px-4 py-2 rounded hover:bg-purple-700 transition cursor-pointer"
-          >
-            Join Now
-          </button>
+          {eventDate < today ? (
+            <h1>this event is Over</h1>
+          ) : (
+            <button
+              onClick={handleCancel}
+              className="bg-purple-600 text-white px-4 py-2 rounded hover:bg-purple-700 transition cursor-pointer"
+            >
+              Cancel
+            </button>
+          )}
         </div>
       </div>
     </div>
   );
 };
 
-export default EventCard;
+export default MyAttendeeEventCard;
